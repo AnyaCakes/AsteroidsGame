@@ -3,14 +3,26 @@ boolean up=false;
 boolean left=false;
 boolean right=false;
 PImage img; 
+int num=200;
+Star[] stars=new Star[num];
 public void setup() 
 {
-  size(400,400);
+  size(800,800);
   img = loadImage("Ship.png");
+
+
+  for(int i=0; i<num; i++)
+  {
+    stars[i]=new Star((float)Math.random()*800,(float)Math.random()*800, (float)Math.random()*8);
+  }
 }
 public void draw() 
 {
-  background(0,100,100);
+  background(0,0,0);
+  for(int i=0; i<num; i++)
+  {
+  stars[i].show();
+  }
   ship.show();
    ship.move();
    if(ship.myDirectionX>5){
@@ -26,7 +38,7 @@ public void draw()
     ship.myDirectionY=-5;
    }
     if(up){
-      ship.accelerate(0.1);
+      ship.accelerate(0.05);
     }
     if(left){
     ship.rotato(-5);
@@ -57,19 +69,23 @@ public void keyReleased(){
     right=false;
   }
 }
+class Star
+{
+  float sSize, sX, sY;
+  Star(float x, float y, float w)
+  {
+    sX=x;
+    sY=y;
+    sSize=w;
+  }
+  void show()
+  {
+    ellipse(sX,sY,sSize, sSize);
+  }
+}
 class SpaceShip extends Floater  
 {   
     public SpaceShip(){
-      /*corners=3;
-      xCorners=new int[corners];
-      yCorners = new int[corners];
-      xCorners[0] = -8;
-      yCorners[0] = -8;
-      xCorners[1] = 16;
-      yCorners[1] = 0;
-      xCorners[2] = -8;
-      yCorners[2] = 8;
-      myColor=1;*/
     }
       public void setX(int x)
       {
@@ -121,10 +137,10 @@ class SpaceShip extends Floater
 }
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   
-  /*protected int corners;  //the number of corners, a triangular floater has 3   
+  protected int corners;  //the number of corners, a triangular floater has 3   
   protected int[] xCorners;   
   protected int[] yCorners;   
-  protected int myColor;   */
+  protected int myColor;   
   protected double myCenterX, myCenterY; //holds center coordinates   
   protected double myDirectionX, myDirectionY; //holds x and y coordinates of the vector for direction of travel   
   protected double myPointDirection; //holds current direction the ship is pointing in degrees    
@@ -184,10 +200,8 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     //convert degrees to radians for sin and cos         
     double dRadians = myPointDirection*(Math.PI/180);                 
     int xRotatedTranslated, yRotatedTranslated;  
-   /* rotate(width/2, height/2);
-    rotate(myPointDirection*Math.PI/360);
-    translate(-img.width/2, -img.height/2);  */
-    /*beginShape();         
+
+    beginShape();         
     for(int nI = 0; nI < corners; nI++)    
     {     
       //rotate and translate the coordinates of the floater using current direction 
@@ -195,6 +209,6 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
       yRotatedTranslated = (int)((xCorners[nI]* Math.sin(dRadians)) + (yCorners[nI] * Math.cos(dRadians))+myCenterY);      
       vertex(xRotatedTranslated,yRotatedTranslated);    
     }   
-    endShape(CLOSE);*/  
+    endShape(CLOSE);
   }   
 } 
