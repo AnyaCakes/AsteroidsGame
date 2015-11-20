@@ -4,9 +4,12 @@ boolean left=false;
 boolean right=false;
 PImage img; 
 int num=200;
+
 Star[] stars=new Star[num];
 public void setup() 
 {
+  ship.setX(400);
+  ship.setY(400);
   size(800,800);
   img = loadImage("Ship.png");
 
@@ -24,7 +27,7 @@ public void draw()
   stars[i].show();
   }
   ship.show();
-   ship.move();
+  ship.move();
    if(ship.myDirectionX>5){
     ship.myDirectionX=5;
    }
@@ -57,6 +60,10 @@ public void draw()
     else if(keyCode==RIGHT){
       right=true;
     }
+    if(keyCode==SHIFT){
+      fill(255,255,255);
+      rect(0,0,800,800);
+    }
  }
 public void keyReleased(){
   if(keyCode==UP){
@@ -67,6 +74,14 @@ public void keyReleased(){
   }
   else if(keyCode==RIGHT){
     right=false;
+  }
+  else if(keyCode==SHIFT){
+    ship.setX((int)(Math.random()*800));
+    ship.setY((int)(Math.random()*800));
+    ship.setPointDirection((int)(Math.random()*360));
+    ship.setDirectionX(0);
+    ship.setDirectionY(0);
+
   }
 }
 class Star
@@ -105,7 +120,7 @@ class SpaceShip extends Floater
       }
       public void setDirectionX(double x)
       {
-        x=myDirectionX;
+        myDirectionX=x;
       }
       public double getDirectionX()
       {
@@ -113,7 +128,7 @@ class SpaceShip extends Floater
       }
       public void setDirectionY(double y)
       {
-        y=myDirectionY;
+        myDirectionY=y;
       }
       public double getDirectionY()
       {
@@ -121,7 +136,7 @@ class SpaceShip extends Floater
       }
       public void setPointDirection(int degrees)
       {
-        degrees = (int)myPointDirection;
+        myPointDirection=(int)degrees;
       }
       public double getPointDirection()
       {
@@ -133,6 +148,8 @@ class SpaceShip extends Floater
         translate(getX(), getY());
         rotate((float)dRadians);
         image(img, -25, -25, 50, 50);
+        rotate((float)-dRadians);
+        translate(-getX(), -getY());
       }
 }
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
