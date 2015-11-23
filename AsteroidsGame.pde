@@ -144,11 +144,11 @@ class SpaceShip extends Floater
       }
       public void show()
       {
-        double dRadians = myPointDirection*(Math.PI/180);
+        float dRadians = (float)(myPointDirection*(Math.PI/180));
         translate(getX(), getY());
-        rotate((float)dRadians);
+        rotate(dRadians);
         image(img, -25, -25, 50, 50);
-        rotate((float)-dRadians);
+        rotate(-dRadians);
         translate(-getX(), -getY());
       }
 }
@@ -214,18 +214,23 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   {             
     //fill(myColor);   
     //stroke(myColor);    
-    //convert degrees to radians for sin and cos         
-    double dRadians = myPointDirection*(Math.PI/180);                 
+     /**
+     *  
+     */  //convert degrees to radians for sin and cos         
+     /**
+     *  
+     */  double dRadians = myPointDirection*(Math.PI/180);                 
     int xRotatedTranslated, yRotatedTranslated;  
 
     beginShape();         
-    for(int nI = 0; nI < corners; nI++)    
-    {     
+ for(int nI = 0; nI < corners; nI++)    
+   {     
       //rotate and translate the coordinates of the floater using current direction 
-      xRotatedTranslated = (int)((xCorners[nI]* Math.cos(dRadians)) - (yCorners[nI] * Math.sin(dRadians))+myCenterX);     
-      yRotatedTranslated = (int)((xCorners[nI]* Math.sin(dRadians)) + (yCorners[nI] * Math.cos(dRadians))+myCenterY);      
-      vertex(xRotatedTranslated,yRotatedTranslated);    
+   xRotatedTranslated = (int)((xCorners[nI]* Math.cos(dRadians)) - (yCorners[nI] * Math.sin(dRadians))+myCenterX);     
+    yRotatedTranslated = (int)((xCorners[nI]* Math.sin(dRadians)) + (yCorners[nI] * Math.cos(dRadians))+myCenterY);      
+     vertex(xRotatedTranslated,yRotatedTranslated);    
     }   
     endShape(CLOSE);
   }   
+
 } 
