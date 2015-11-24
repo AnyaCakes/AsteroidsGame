@@ -3,8 +3,9 @@ boolean up=false;
 boolean left=false;
 boolean right=false;
 PImage img; 
+PImage imag;
 int num=200;
-
+Asteroid[] aster = new Asteroid[100];
 Star[] stars=new Star[num];
 public void setup() 
 {
@@ -12,19 +13,34 @@ public void setup()
   ship.setY(400);
   size(800,800);
   img = loadImage("Ship.png");
-
+  imag = loadImage("asteroid.gif");
 
   for(int i=0; i<num; i++)
   {
     stars[i]=new Star((float)Math.random()*800,(float)Math.random()*800, (float)Math.random()*8);
   }
+  for(int i=0; i<10; i++)
+  {
+    aster[i]=new Asteroid();
+    aster[i].setX((int)(Math.random()*800));
+    aster[i].setY((int)(Math.random()*800));
+    aster[i].setPointDirection((int)(Math.random()*360));
+    aster[i].setDirectionX(Math.random()*8-4);
+    aster[i].setDirectionY(Math.random()*8-4);
+  }
 }
+
 public void draw() 
 {
   background(0,0,0);
   for(int i=0; i<num; i++)
   {
   stars[i].show();
+  }
+  for(int i=0; i<10; i++)
+  {
+    aster[i].show();
+    aster[i].move();
   }
   ship.show();
   ship.move();
@@ -100,7 +116,8 @@ class Star
 }
 class SpaceShip extends Floater  
 {   
-    public SpaceShip(){
+    public SpaceShip()
+    {
     }
       public void setX(int x)
       {
@@ -148,6 +165,61 @@ class SpaceShip extends Floater
         translate(getX(), getY());
         rotate(dRadians);
         image(img, -25, -25, 50, 50);
+        rotate(-dRadians);
+        translate(-getX(), -getY());
+      }
+}
+class Asteroid extends Floater
+{
+  public Asteroid()
+  {
+  }
+  public void setX(int x)
+      {
+        myCenterX=x;
+      }
+      public int getX()
+      {
+        return (int)myCenterX;
+      }
+      public void setY(int y)
+      {
+        myCenterY=y;
+      }
+      public int getY()
+      {
+        return (int)myCenterY;
+      }
+      public void setDirectionX(double x)
+      {
+        myDirectionX=x;
+      }
+      public double getDirectionX()
+      {
+        return myDirectionX;
+      }
+      public void setDirectionY(double y)
+      {
+        myDirectionY=y;
+      }
+      public double getDirectionY()
+      {
+        return myDirectionY;
+      }
+      public void setPointDirection(int degrees)
+      {
+        myPointDirection=(int)degrees;
+      }
+      public double getPointDirection()
+      {
+        return myPointDirection;
+      }
+      public void show()
+      {
+        float dRadians = (float)(myPointDirection*(Math.PI/180));
+        translate(getX(), getY());
+        rotate(dRadians);
+        image(imag, -25, -25, 50, 50);
         rotate(-dRadians);
         translate(-getX(), -getY());
       }
